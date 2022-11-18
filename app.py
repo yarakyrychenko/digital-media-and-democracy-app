@@ -32,9 +32,9 @@ data["text"] = [str(data.loc[i, "Title"]) + " " + str(data.loc[i, "Abstract Note
 st.markdown("<h1 style='text-align: center;'> Digital Media and Democracy </h1>", unsafe_allow_html=True)
 st.markdown("<h3 style='text-align: center;'>  wordclouds of titles and abstracts of scientific papers </h3>", unsafe_allow_html=True)
 
-stopwords = STOPWORDS.update(["find", "study", "investigate", "result", "sample", 
+stopwords = STOPWORDS.union(set(["find", "study", "investigate", "result", "sample", 
                                 "finding", "paper", "article", "results", "findings",
-                                "test", "one", "two", "three", "examine"])
+                                "test", "one", "two", "three", "examine"]))
 
 def preprocess(out):
     text = " ".join(out)
