@@ -20,9 +20,6 @@ data["text"] = [str(data.loc[i, "Title"]) + " " + str(data.loc[i, "Abstract Note
 
 st.title(" Digital Media and Democracy") 
 st.subheader("Create a wordcloud out of titles and abstracts of papers about digital media and democracy!")
-st.markdown("Based on data from:")
-st.markdown("Lorenz-Spreen, P., Oswald, L., Lewandowsky, S. et al. A systematic review of worldwide causal and correlational evidence on digital media and democracy. Nat Hum Behav (2022). https://doi.org/10.1038/s41562-022-01460-1")
-st.markdown("OSF: https://osf.io/7ry4a/")
 
 
 def preprocess(out):
@@ -76,3 +73,6 @@ else:
     figure = make_wordcloud(texts, color)
     st.pyplot(figure)
 
+st.markdown()
+st.markdown("Based on data from:\nLorenz-Spreen, P., Oswald, L., Lewandowsky, S. et al. A systematic review of worldwide causal and correlational evidence on digital media and democracy. Nat Hum Behav (2022). https://doi.org/10.1038/s41562-022-01460-1")
+st.markdown("OSF: https://osf.io/7ry4a/")
