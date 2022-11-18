@@ -30,7 +30,7 @@ def make_wordcloud(out):
     text = preprocess(out)
     wordcloud = WordCloud(width=1800, height=1200,stopwords=STOPWORDS,
                         max_font_size=250, max_words=200, background_color="white",
-                        colormap='YlOrRd', collocations=True).generate(text)  
+                        colormap='inferno', collocations=True).generate(text)  
 
     fig = plt.figure(figsize=(18,12))
     plt.imshow(wordcloud, interpolation="bilinear")
@@ -40,7 +40,7 @@ def make_wordcloud(out):
 def get_filtered_txt(data, filtervars, vars = ["Year", "effect", "country"]):
     newdata = data.copy()
     for i in range(len(vars)):
-        if filtervars[i][0] == "All":
+        if filtervars[i][0] == "All" or filtervars[i] == []:
             pass
         else:
             tuplefilt = tuple(filtervars[i])
