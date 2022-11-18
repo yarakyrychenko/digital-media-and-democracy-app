@@ -29,12 +29,15 @@ data["text"] = [str(data.loc[i, "Title"]) + " " + str(data.loc[i, "Abstract Note
 #lottie_tweet = load_lottieurl('https://assets6.lottiefiles.com/packages/lf20_tnrzlN.json')
 #st_lottie(lottie_tweet, speed=1, height=200, key="initial")
 
-st.markdown("<h2 style='text-align: center;'> Digital Media and Democracy </h2>", unsafe_allow_html=True)
-st.markdown("<h3 style='text-align: center;'>  wordclouds out of titles and abstracts of scientific papers </h3>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center;'> Digital Media and Democracy </h1>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center;'>  wordclouds of titles and abstracts of scientific papers </h3>", unsafe_allow_html=True)
 
+remove_words = ["find" "study", "investigate", "result", "sample", "finding", "paper", "article"]
 def preprocess(out):
     text = " ".join(out)
     text = text.lower()
+    for word in remove_words:
+        text.replace(word, "")
     #text = re.sub(pattern=r"http\S+",repl="",string=text.lower())
     #text = re.sub(pattern=r"@\S+",repl="",string=text)
     return text
