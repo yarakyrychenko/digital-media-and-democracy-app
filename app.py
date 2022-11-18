@@ -77,13 +77,9 @@ st.markdown("""
 
 ---
 
-By [@YaraKyrychenko](https://twitter.com/YaraKyrychenko)
-Based on data from:
+By [@YaraKyrychenko](https://twitter.com/YaraKyrychenko) based on data from:
 
-    > Lorenz-Spreen, P., Oswald, L., Lewandowsky, S. et al. A systematic review of worldwide causal and correlational evidence on digital media and democracy. Nat Hum Behav (2022). https://doi.org/10.1038/s41562-022-01460-1
+Lorenz-Spreen, P., Oswald, L., Lewandowsky, S. et al. A systematic review of worldwide causal and correlational evidence on digital media and democracy. Nat Hum Behav (2022). https://doi.org/10.1038/s41562-022-01460-1
 
----
-
-Data OSF: https://osf.io/7ry4a/
-Web App GitHub: https://github.com/yarakyrychenko/digital-media-and-democracy-app
+[Data OSF](https://osf.io/7ry4a/) * [Web App GitHub](https://github.com/yarakyrychenko/digital-media-and-democracy-app) 
 """)
