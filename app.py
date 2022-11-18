@@ -73,7 +73,7 @@ else:
     figure = make_wordcloud(texts, color)
     st.pyplot(figure)
 
-st.text("""
+st.markdown("""
 
 ---
 
