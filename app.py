@@ -30,7 +30,7 @@ data["text"] = [str(data.loc[i, "Title"]) + " " + str(data.loc[i, "Abstract Note
 #st_lottie(lottie_tweet, speed=1, height=200, key="initial")
 
 st.markdown("<h2 style='text-align: center;'> Digital Media and Democracy </h2>", unsafe_allow_html=True)
-st.markdown("<h3 style='text-align: center;'>  Create a wordcloud out of titles and abstracts of papers about digital media and democracy! </h3>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center;'>  wordclouds out of titles and abstracts of scientific papers </h3>", unsafe_allow_html=True)
 
 def preprocess(out):
     text = " ".join(out)
