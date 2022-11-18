@@ -4,7 +4,7 @@ from wordcloud import WordCloud, STOPWORDS
 
 data = pd.read_excel("data_review.xlsx")
 countries = list(data.country.unique())
-text = [data.loc[i, "Title"] + " " + data.loc[i, "Abstract.Note"] for i in range(len(data))]
+text = [str(data.loc[i, "Title"]) + " " + str(data.loc[i, "Abstract.Note"]) for i in range(len(data))]
 data["text"] = text 
 
 st.title(" Digital Media and Democracy") 
