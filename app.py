@@ -2,11 +2,10 @@ import pandas as pd, streamlit as st
 import matplotlib.pyplot as plt 
 from wordcloud import WordCloud, STOPWORDS
 
-data = pd.read_excel("data_review.xlsx").fillna("Other")
+data = pd.read_excel("data_review.xlsx").fillna("Unknown")
 countries = list(data.country.unique())
-countries.append("All")
-text = [str(data.loc[i, "Title"]) + " " + str(data.loc[i, "Abstract.Note"]) for i in range(len(data))]
-data["text"] = text 
+countries.insert(0, "All")
+data["text"] = [str(data.loc[i, "Title"]) + " " + str(data.loc[i, "Abstract.Note"]) for i in range(len(data))]
 
 st.title(" Digital Media and Democracy") 
 st.subheader("Create a wordcloud out of abstracts of papers about digital media and democracy!")
