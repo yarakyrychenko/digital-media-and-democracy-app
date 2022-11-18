@@ -63,9 +63,9 @@ def get_filtered_txt(data, filtervars, vars = ["Year", "effect", "country"]):
     return newdata.text
 
 
-st.multiselect("Filter by year", years, default=["All"], key="YEAR")
-st.multiselect("Filter by effect", effects, default=["All"], key="EFFECT")
-st.multiselect("Filter by country", countries, default=["All"], key="COUNTRY")
+st.multiselect("Filter by year of publication", years, default=["All"], key="YEAR")
+st.multiselect("Filter by effect of digital media on democracy", effects, default=["All"], key="EFFECT")
+st.multiselect("Filter by country of study", countries, default=["All"], key="COUNTRY")
 
 filters = [st.session_state.YEAR , st.session_state.EFFECT, st.session_state.COUNTRY ]
 texts = get_filtered_txt(data, filters)
@@ -89,7 +89,7 @@ st.markdown("""
 
 By [@YaraKyrychenko](https://twitter.com/YaraKyrychenko) based on data from:
 
-Lorenz-Spreen, P., Oswald, L., Lewandowsky, S. et al. A systematic review of worldwide causal and correlational evidence on digital media and democracy. Nat Hum Behav (2022). https://doi.org/10.1038/s41562-022-01460-1
+Lorenz-Spreen, P., Oswald, L., Lewandowsky, S. et al. [A systematic review of worldwide causal and correlational evidence on digital media and democracy.](https://doi.org/10.1038/s41562-022-01460-1) Nat Hum Behav (2022).
 
-[Data OSF](https://osf.io/7ry4a/) [Web App GitHub](https://github.com/yarakyrychenko/digital-media-and-democracy-app) 
+[Data (OSF)](https://osf.io/7ry4a/) [Web App (GitHub)](https://github.com/yarakyrychenko/digital-media-and-democracy-app) 
 """)
