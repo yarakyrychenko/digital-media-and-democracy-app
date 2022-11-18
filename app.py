@@ -2,6 +2,7 @@ import pandas as pd, streamlit as st
 import matplotlib.pyplot as plt 
 from wordcloud import WordCloud, STOPWORDS
 from streamlit_lottie import st_lottie
+import requests
 
 def load_lottieurl(url):
     r = requests.get(url)
