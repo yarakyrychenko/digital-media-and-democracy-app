@@ -40,6 +40,8 @@ st.session_state.new_stopwords = STOPWORDS.union(set(["find", "study", "investig
                                 "finding", "paper", "article", "results", "findings",
                                 "test", "one", "two", "three", "examine"]))
 
+#st.session_state.new_stopwords = st.session_state.new_stopwords.remove("social")
+
 
 def make_wordcloud(text, color):
     text = " ".join(text)
