@@ -3,7 +3,8 @@ import matplotlib.pyplot as plt
 from wordcloud import WordCloud, STOPWORDS
 
 data = pd.read_excel("data_review.xlsx").fillna("Other")
-countries = list(data.country.unique()).append("All")
+countries = list(data.country.unique())
+countries.append("All")
 text = [str(data.loc[i, "Title"]) + " " + str(data.loc[i, "Abstract.Note"]) for i in range(len(data))]
 data["text"] = text 
 
