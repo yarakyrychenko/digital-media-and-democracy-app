@@ -2,7 +2,7 @@ import pandas as pd, streamlit as st
 import matplotlib.pyplot as plt 
 from wordcloud import WordCloud, STOPWORDS
 
-data = pd.read_csv("data_review.csv")
+data = pd.read_excel("data_review.xlsx")
 countries = list(data.country)
 data.text = data.Title + " " + data["Abstract.Note"]
 st.title(" Digital Media and Democracy") 
