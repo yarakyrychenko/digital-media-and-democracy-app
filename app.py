@@ -40,7 +40,9 @@ def make_wordcloud(out):
 def get_filtered_txt(data, filtervars, vars = ["Year", "effect", "country"]):
     newdata = data.copy()
     for i in range(len(vars)):
-        if filtervars[i][0] == "All" or filtervars[i] == []:
+        if len(filtervars[i]) == 0:
+            pass 
+        elif filtervars[i][0] == "All":
             pass
         else:
             tuplefilt = tuple(filtervars[i])
