@@ -34,8 +34,7 @@ st.markdown("<h3 style='text-align: center;'>  wordclouds of titles and abstract
 
 stopwords = STOPWORDS.update(["find", "study", "investigate", "result", "sample", 
                                 "finding", "paper", "article", "results", "findings",
-                                "test", "one", "two", "three", 
-                                "social", "media"])
+                                "test", "one", "two", "three", "examine"])
 
 def preprocess(out):
     text = " ".join(out)
