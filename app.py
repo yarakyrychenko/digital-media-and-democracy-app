@@ -4,10 +4,10 @@ from wordcloud import WordCloud, STOPWORDS
 
 data = pd.read_excel("data_effects.xlsx").fillna("Unknown")
 data.country = data.country.apply(lambda x: "USA" if x == "United States" else x)
-countries = list(data.country.unique())
+countries = list(data.country.unique()).sort(reverse=True)
 countries.insert(0, "All")
 data.Year = data.Year.apply(lambda x: str(x)[:4])
-years = list(data.Year.unique())
+years = list(data.Year.unique()).sort(reverse=True)
 years.insert(0, "All")
 data.effect = pd.Categorical(data.effect).rename_categories({-1: 'Detrimental', 0: 'No association', 1: "Beneficial"})
 effects = list(data.effect.unique())
