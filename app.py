@@ -7,7 +7,7 @@ countries = list(data.country.unique())
 countries.insert(0, "All")
 years = list(data.Year.unique())
 years.insert(0, "All")
-data.effect.rename_categories({-1: 'Detrimental', 0: 'No association', 1: "Beneficial"})
+data.effect = pd.Categorical(data.effect).rename_categories({-1: 'Detrimental', 0: 'No association', 1: "Beneficial"})
 effects = list(data.effect.unique())
 effects.insert(0, "All")
 
