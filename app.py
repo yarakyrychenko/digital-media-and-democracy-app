@@ -52,7 +52,7 @@ def make_wordcloud(text, color, stopwords = st.session_state.stopwords):
     plt.axis("off")
     return fig
 
-def get_filtered_txt(data, filtervars, vars = ["Year", "effect", "country"]):
+def get_filtered_data(data, filtervars, vars = ["Year", "effect", "country"]):
     newdata = data.copy()
     for i in range(len(vars)):
         if len(filtervars[i]) == 0:
@@ -62,7 +62,7 @@ def get_filtered_txt(data, filtervars, vars = ["Year", "effect", "country"]):
         else:
             tuplefilt = tuple(filtervars[i])
             newdata = newdata.query(f'{vars[i]} in {tuplefilt}')
-    return newdata.text
+    return newdata
 
 
 st.multiselect("Filter by year of publication", years, default=["All"], key="YEAR")
@@ -70,7 +70,9 @@ st.multiselect("Filter by effect of digital media on democracy", effects, defaul
 st.multiselect("Filter by country of study", countries, default=["All"], key="COUNTRY")
 
 filters = [st.session_state.YEAR , st.session_state.EFFECT, st.session_state.COUNTRY ]
-texts = get_filtered_txt(data, filters)
+newdf = get_filtered_data(data, filters)
+texts = newdf.text
+
 if len(texts) == 0:
     st.markdown("There are no articles matching your selection criteria.")
 else:
@@ -85,6 +87,12 @@ else:
     figure = make_wordcloud(texts, color)
     st.pyplot(figure)
 
+    st.markdown("Showing the first fifty articles:")
+    for i in range(len(newdf)):
+        st.markdown(f"{i}. {newdf.loc[i,'Year']}. {newdf.loc[i,'Title']} https://doi.org/{newdf.loc[i,'DOI']}")
+        if i == 50:
+            break
+        
 st.markdown("""
 
 ---
