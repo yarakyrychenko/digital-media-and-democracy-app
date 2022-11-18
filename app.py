@@ -22,7 +22,11 @@ years = list(data.Year.unique())
 years.sort(reverse=True)
 years.insert(0, "All")
 
-data.effect = pd.Categorical(data.effect).rename_categories({-1: 'Detrimental', 0: 'No association', 1: "Beneficial"})
+outcomes = list(data.outcome_clean.unique())
+outcomes.sort(reverse=True)
+outcomes.insert(0, "All")
+
+data.effect = pd.Categorical(data.effect).rename_categories({-1: 'Negative', 0: 'No association', 1: "Positive"})
 effects = list(data.effect.unique())
 effects.insert(0, "All")
 
@@ -34,7 +38,7 @@ data.text = data.text.apply(lambda text: text.lower())
 #st_lottie(lottie_tweet, speed=1, height=200, key="initial")
 
 st.markdown("<h1 style='text-align: center;'> Digital Media and Democracy </h1>", unsafe_allow_html=True)
-st.markdown("<h3 style='text-align: center;'>  wordclouds of titles and abstracts of scientific papers </h3>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center;'> wordclouds of titles and abstracts of scientific papers </h3>", unsafe_allow_html=True)
 
 st.session_state.stopwords = STOPWORDS.union(set(["find", "study", "investigate", "result", "sample", 
                                 "finding", "paper", "article", "results", "findings",
@@ -52,7 +56,7 @@ def make_wordcloud(text, color, stopwords = st.session_state.stopwords):
     plt.axis("off")
     return fig
 
-def get_filtered_data(data, filtervars, vars = ["Year", "effect", "country"]):
+def get_filtered_data(data, filtervars, vars = ["Year", "outcome_clean", "effect", "country"]):
     newdata = data.copy()
     for i in range(len(vars)):
         if len(filtervars[i]) == 0:
@@ -66,7 +70,8 @@ def get_filtered_data(data, filtervars, vars = ["Year", "effect", "country"]):
 
 
 st.multiselect("Filter by year of publication", years, default=["All"], key="YEAR")
-st.multiselect("Filter by effect of digital media on democracy", effects, default=["All"], key="EFFECT")
+st.multiselect("Filter by outcome", effects, default=["All"], key="EFFECT")
+st.multiselect("Filter by effect of digital media on outcome", effects, default=["All"], key="EFFECT")
 st.multiselect("Filter by country of study", countries, default=["All"], key="COUNTRY")
 
 filters = [st.session_state.YEAR , st.session_state.EFFECT, st.session_state.COUNTRY ]
