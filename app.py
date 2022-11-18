@@ -26,11 +26,11 @@ def preprocess(out):
     #text = re.sub(pattern=r"@\S+",repl="",string=text)
     return text
 
-def make_wordcloud(out):
+def make_wordcloud(out, color):
     text = preprocess(out)
     wordcloud = WordCloud(width=1800, height=1200,stopwords=STOPWORDS,
                         max_font_size=250, max_words=200, background_color="white",
-                        colormap='autumn', collocations=True).generate(text)  
+                        colormap=color, collocations=True).generate(text)  
 
     fig = plt.figure(figsize=(18,12))
     plt.imshow(wordcloud, interpolation="bilinear")
@@ -60,6 +60,13 @@ if len(texts) == 0:
     st.markdown("There are no articles matching your selection criteria.")
 else:
     st.markdown(f"There are {len(texts)} articles matching your selection criteria.")
-    figure = make_wordcloud(texts)
+    if st.session_state.EFFECT == ["Detrimental"]:
+        color = 'autumn' 
+    elif st.session_state.EFFECT == ["Beneficial"]:
+        color = 'summer' 
+    else: 
+        color = 'cool'
+        
+    figure = make_wordcloud(texts, color)
     st.pyplot(figure)
 
