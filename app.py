@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from wordcloud import WordCloud, STOPWORDS
 
 data = pd.read_excel("data_effects.xlsx").fillna("Unknown")
-data.country = pd.Categorical(data.country).rename_categories({"United States": "USA"})
+data.country = data.country.apply(lambda x: "USA" if x == "United States" else x)
 countries = list(data.country.unique())
 countries.insert(0, "All")
 data.Year = data.Year.apply(lambda x: str(x)[:4])
