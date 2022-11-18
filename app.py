@@ -89,7 +89,8 @@ else:
 
     newdf.drop_duplicates(subset=["Title"],inplace=True)
     newdf = newdf[newdf["Year"] != "Unkn"]
-    newdf = newdf[len(newdf["DOI"]) < 100]
+    newdf["DOITrue"] = newdf.DOI.apply(lambda doi : len(doi) < 100)
+    newdf = newdf[newdf["DOITrue"]]
     newdf.sort_values(by=['Year'], ascending=False, inplace=True)
     newdf.reset_index(inplace=True)
 
