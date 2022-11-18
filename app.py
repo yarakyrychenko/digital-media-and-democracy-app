@@ -30,7 +30,7 @@ def make_wordcloud(out):
     text = preprocess(out)
     wordcloud = WordCloud(width=1800, height=1200,stopwords=STOPWORDS,
                         max_font_size=250, max_words=200, background_color="white",
-                        colormap='cool', collocations=True).generate(text)  
+                        colormap='YOrRd', collocations=True).generate(text)  
 
     fig = plt.figure(figsize=(18,12))
     plt.imshow(wordcloud, interpolation="bilinear")
@@ -40,7 +40,7 @@ def make_wordcloud(out):
 def get_filtered_txt(data, filtervars, vars = ["Year", "effect", "country"]):
     newdata = data.copy()
     for i in range(len(vars)):
-        if filtervars[i] == ["All"]:
+        if filtervars[i][0] == "All":
             pass
         else:
             tuplefilt = tuple(filtervars[i])
@@ -48,9 +48,9 @@ def get_filtered_txt(data, filtervars, vars = ["Year", "effect", "country"]):
     return newdata.text
 
 
-st.multiselect("Filter by year", years, key="YEAR")
-st.multiselect("Filter by effect", effects, key="EFFECT")
-st.multiselect("Filter by country", countries, key="COUNTRY")
+st.multiselect("Filter by year", years, default=["All"], key="YEAR")
+st.multiselect("Filter by effect", effects, default=["All"], key="EFFECT")
+st.multiselect("Filter by country", countries, default=["All"], key="COUNTRY")
 
 filters = [st.session_state.YEAR , st.session_state.EFFECT, st.session_state.COUNTRY ]
 texts = get_filtered_txt(data, filters)
