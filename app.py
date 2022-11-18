@@ -71,7 +71,8 @@ st.multiselect("Filter by country of study", countries, default=["All"], key="CO
 
 filters = [st.session_state.YEAR , st.session_state.EFFECT, st.session_state.COUNTRY ]
 newdf = get_filtered_data(data, filters)
-texts = newdf.text
+df = newdf.drop_duplicates(subset=["Title"])
+texts = df.text
 
 if len(texts) == 0:
     st.markdown("There are no articles matching your selection criteria.")
@@ -95,7 +96,7 @@ else:
     newdf.reset_index(inplace=True)
 
     st.slider("How many titles would you like to explore?", min_value=10, max_value=len(newdf), value=10, step=10, key="number_to_print")
-    st.markdown(f"Showing the most recent {st.session_state.number_to_print} articles:")
+    st.markdown(f"Showing {st.session_state.number_to_print} most recent articles:")
 
     for i in range(len(newdf)):
         st.markdown(f"{newdf.loc[i,'Year']}. {newdf.loc[i,'Title']} https://doi.org/{newdf.loc[i,'DOI']}")
