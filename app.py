@@ -3,6 +3,12 @@ import matplotlib.pyplot as plt
 from wordcloud import WordCloud, STOPWORDS
 from streamlit_lottie import st_lottie
 
+def load_lottieurl(url):
+    r = requests.get(url)
+    if r.status_code != 200:
+        return None
+    return r.json()
+
 data = pd.read_excel("data_effects.xlsx").fillna("Unknown")
 data.country = data.country.apply(lambda x: "USA" if x == "United States" else x)
 countries = list(data.country.unique())
