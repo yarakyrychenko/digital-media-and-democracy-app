@@ -30,7 +30,7 @@ def make_wordcloud(out):
     text = preprocess(out)
     wordcloud = WordCloud(width=1800, height=1200,stopwords=STOPWORDS,
                         max_font_size=250, max_words=200, background_color="white",
-                        colormap='YOrRd', collocations=True).generate(text)  
+                        colormap='YlOrRd', collocations=True).generate(text)  
 
     fig = plt.figure(figsize=(18,12))
     plt.imshow(wordcloud, interpolation="bilinear")
