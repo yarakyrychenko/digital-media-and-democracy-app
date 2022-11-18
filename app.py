@@ -32,12 +32,12 @@ data["text"] = [str(data.loc[i, "Title"]) + " " + str(data.loc[i, "Abstract Note
 st.markdown("<h1 style='text-align: center;'> Digital Media and Democracy </h1>", unsafe_allow_html=True)
 st.markdown("<h3 style='text-align: center;'>  wordclouds of titles and abstracts of scientific papers </h3>", unsafe_allow_html=True)
 
-remove_words = ["find" "study", "investigate", "result", "sample", "finding", "paper", "article"]
+remove_words = ["find", "study", "investigate", "result", "sample", "finding", "paper", "article"]
 def preprocess(out):
     text = " ".join(out)
     text = text.lower()
     for word in remove_words:
-        text.replace(word, "")
+        text = text.replace(word, "")
     #text = re.sub(pattern=r"http\S+",repl="",string=text.lower())
     #text = re.sub(pattern=r"@\S+",repl="",string=text)
     return text
