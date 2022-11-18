@@ -2,11 +2,12 @@ import pandas as pd, streamlit as st
 import matplotlib.pyplot as plt 
 from wordcloud import WordCloud, STOPWORDS
 
-data = pd.read_excel("data_review.xlsx").fillna("Unknown")
+data = pd.read_excel("data_effects.xlsx").fillna("Unknown")
 countries = list(data.country.unique())
 countries.insert(0, "All")
 years = list(data.Year.unique())
 years.insert(0, "All")
+data.effect.rename_categories({-1: 'Detrimental', 0: 'No association', 1: "Beneficial"})
 effects = list(data.effect.unique())
 effects.insert(0, "All")
 
@@ -33,27 +34,26 @@ def make_wordcloud(out):
     plt.axis("off")
     return fig
 
-def get_filtered_txt(data, filtervar):
-    if filtervar == "All":
-        return data.text
-    else:
-        return data[data.country==filtervar].text
+def get_filtered_txt(data, filtervars, vars = ["Year", "effect", "country"]):
+    newdata = data.copy()
+    for i in range(len(vars)):
+        if filtervars[i] == "All":
+            pass
+        else:
+            newdata = newdata[newdata.vars[i]==filtervars[i]]
+    return newdata.text
 
-st.markdown("First, let's check how the research field evolved over time.")
+
 st.selectbox("Filter by year", years, key="YEAR")
-
-ytexts = get_filtered_txt(data, st.session_state.YEAR )
-figure = make_wordcloud(ytexts)
-
-st.markdown(f"The wordcloud is based on {len(texts)} articles.")
-st.pyplot(figure)
-
-st.markdown("Let's see how the abstracts differ by country.")
+st.selectbox("Filter by effect", effects, key="EFFECT")
 st.selectbox("Filter by country", countries, key="COUNTRY")
 
-ctexts = get_filtered_txt(data, st.session_state.COUNTRY )
-figure = make_wordcloud(ctexts)
-
-st.markdown(f"The wordcloud is based on {len(texts)} articles.")
-st.pyplot(figure)
+filters = [st.session_state.YEAR , st.session_state.EFFECT, st.session_state.COUNTRY ]
+texts = get_filtered_txt(data, filters)
+if len(texts) == 0:
+    st.markdown("There are no articles matching your selection criteria.")
+else:
+    st.markdown(f"There are {len(texts)} articles matching your selection criteria.")
+    figure = make_wordcloud(texts)
+    st.pyplot(figure)
 
