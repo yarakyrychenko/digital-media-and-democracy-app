@@ -1,6 +1,7 @@
 import pandas as pd, streamlit as st
 import matplotlib.pyplot as plt 
 from wordcloud import WordCloud, STOPWORDS
+from streamlit_lottie import st_lottie
 
 data = pd.read_excel("data_effects.xlsx").fillna("Unknown")
 data.country = data.country.apply(lambda x: "USA" if x == "United States" else x)
@@ -18,9 +19,11 @@ effects.insert(0, "All")
 # Abstract.Note for data_review
 data["text"] = [str(data.loc[i, "Title"]) + " " + str(data.loc[i, "Abstract Note...8"]) for i in range(len(data))]
 
-st.title(" Digital Media and Democracy") 
-st.subheader("Create a wordcloud out of titles and abstracts of papers about digital media and democracy!")
+lottie_tweet = load_lottieurl('https://assets3.lottiefiles.com/packages/lf20_t2xm9bsw.json')
+st_lottie(lottie_tweet, speed=1, height=200, key="initial")
 
+st.markdown("<h1 style='text-align: center;'> Digital Media and Democracy </h1>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align: center;'>  Create a wordcloud out of titles and abstracts of papers about digital media and democracy! </h2>", unsafe_allow_html=True)
 
 def preprocess(out):
     text = " ".join(out)
@@ -81,5 +84,5 @@ By [@YaraKyrychenko](https://twitter.com/YaraKyrychenko) based on data from:
 
 Lorenz-Spreen, P., Oswald, L., Lewandowsky, S. et al. A systematic review of worldwide causal and correlational evidence on digital media and democracy. Nat Hum Behav (2022). https://doi.org/10.1038/s41562-022-01460-1
 
-[Data OSF](https://osf.io/7ry4a/) * [Web App GitHub](https://github.com/yarakyrychenko/digital-media-and-democracy-app) 
+[Data OSF](https://osf.io/7ry4a/) [Web App GitHub](https://github.com/yarakyrychenko/digital-media-and-democracy-app) 
 """)
