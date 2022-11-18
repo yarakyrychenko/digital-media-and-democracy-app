@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from wordcloud import WordCloud, STOPWORDS
 
 data = pd.read_excel("data_review.xlsx")
-countries = list(data.country)
+countries = list(data.country.unique())
 data.text = data.Title + " " + data["Abstract.Note"]
 st.title(" Digital Media and Democracy") 
 st.subheader("Create a wordcloud out of abstracts of papers about digital media and democracy!")
