@@ -26,8 +26,8 @@ effects.insert(0, "All")
 # Abstract.Note for data_review
 data["text"] = [str(data.loc[i, "Title"]) + " " + str(data.loc[i, "Abstract Note...8"]) for i in range(len(data))]
 
-lottie_tweet = load_lottieurl('https://assets6.lottiefiles.com/packages/lf20_tnrzlN.json')
-st_lottie(lottie_tweet, speed=1, height=200, key="initial")
+#lottie_tweet = load_lottieurl('https://assets6.lottiefiles.com/packages/lf20_tnrzlN.json')
+#st_lottie(lottie_tweet, speed=1, height=200, key="initial")
 
 st.markdown("<h1 style='text-align: center;'> Digital Media and Democracy </h1>", unsafe_allow_html=True)
 st.markdown("<h2 style='text-align: center;'>  Create a wordcloud out of titles and abstracts of papers about digital media and democracy! </h2>", unsafe_allow_html=True)
