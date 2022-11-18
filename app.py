@@ -2,15 +2,15 @@ import pandas as pd, streamlit as st
 import matplotlib.pyplot as plt 
 from wordcloud import WordCloud, STOPWORDS
 
-data = pd.read_excel("data_review.xlsx")
-countries = list(data.country.unique())
+data = pd.read_excel("data_review.xlsx").fillna("Other")
+countries = list(data.country.unique()).append("All")
 text = [str(data.loc[i, "Title"]) + " " + str(data.loc[i, "Abstract.Note"]) for i in range(len(data))]
 data["text"] = text 
 
 st.title(" Digital Media and Democracy") 
 st.subheader("Create a wordcloud out of abstracts of papers about digital media and democracy!")
 
-st.radio("Filter by country", countries, key="COUNTRY")
+st.selectbox("Filter by country", countries, key="COUNTRY")
 
 def preprocess(out):
     text = " ".join(out)
@@ -30,7 +30,10 @@ def make_wordcloud(out):
     plt.axis("off")
     return fig
 
+if st.session_state.COUNTRY == "All":
+    texts = data.text
+else:
+    texts = data[data.country==st.session_state.COUNTRY].text
 
-texts = data[data.country==st.session_state.COUNTRY].text
 figure = make_wordcloud(texts)
 st.pyplot(figure)
