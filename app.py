@@ -29,7 +29,7 @@ def preprocess(out):
 def make_wordcloud(out, color):
     text = preprocess(out)
     wordcloud = WordCloud(width=1800, height=1200,stopwords=STOPWORDS,
-                        max_font_size=250, max_words=200, background_color="white",
+                        max_font_size=250, max_words=150, background_color="white",
                         colormap=color, collocations=True).generate(text)  
 
     fig = plt.figure(figsize=(18,12))
@@ -66,7 +66,7 @@ else:
         color = 'summer' 
     else: 
         color = 'cool'
-        
+
     figure = make_wordcloud(texts, color)
     st.pyplot(figure)
 
