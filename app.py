@@ -73,6 +73,17 @@ else:
     figure = make_wordcloud(texts, color)
     st.pyplot(figure)
 
-st.markdown()
-st.markdown("Based on data from:\nLorenz-Spreen, P., Oswald, L., Lewandowsky, S. et al. A systematic review of worldwide causal and correlational evidence on digital media and democracy. Nat Hum Behav (2022). https://doi.org/10.1038/s41562-022-01460-1")
-st.markdown("OSF: https://osf.io/7ry4a/")
+st.text("""
+
+---
+
+By [@YaraKyrychenko](https://twitter.com/YaraKyrychenko)
+Based on data from:
+
+    > Lorenz-Spreen, P., Oswald, L., Lewandowsky, S. et al. A systematic review of worldwide causal and correlational evidence on digital media and democracy. Nat Hum Behav (2022). https://doi.org/10.1038/s41562-022-01460-1
+
+---
+
+Data OSF: https://osf.io/7ry4a/
+Web App GitHub: https://github.com/yarakyrychenko/digital-media-and-democracy-app
+""")
