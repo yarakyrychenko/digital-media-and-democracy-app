@@ -87,12 +87,13 @@ else:
     figure = make_wordcloud(texts, color)
     st.pyplot(figure)
 
-    st.markdown("Showing the first fifty articles:")
+    st.markdown("Showing the most recent fifty articles:")
+    newdf = newdf.sort_values(by=['Year'], ascending=False)
     for i in range(len(newdf)):
-        st.markdown(f"{i}. {newdf.loc[i,'Year']}. {newdf.loc[i,'Title']} https://doi.org/{newdf.loc[i,'DOI']}")
+        st.markdown(f"{newdf.loc[i,'Year']}. {newdf.loc[i,'Title']} https://doi.org/{newdf.loc[i,'DOI']}")
         if i == 50:
             break
-        
+
 st.markdown("""
 
 ---
