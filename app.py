@@ -4,7 +4,9 @@ from wordcloud import WordCloud, STOPWORDS
 
 data = pd.read_excel("data_review.xlsx")
 countries = list(data.country.unique())
-data.text = data.Title + " " + data["Abstract.Note"]
+text = [data.loc[i, "Title"] + " " + data.loc[i, "Abstract.Note"] for i in range(len(data))]
+data["text"] = text 
+
 st.title(" Digital Media and Democracy") 
 st.subheader("Create a wordcloud out of abstracts of papers about digital media and democracy!")
 
