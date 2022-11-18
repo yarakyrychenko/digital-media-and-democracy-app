@@ -87,12 +87,18 @@ else:
     figure = make_wordcloud(texts, color)
     st.pyplot(figure)
 
-    st.markdown("Showing the most recent fifty articles:")
+    newdf.drop_duplicates(subset=["Title"],inplace=True)
+    newdf = newdf[newdf["Year"] != "Unkn"]
+    newdf = newdf[len(newdf["DOI"]) < 100]
     newdf.sort_values(by=['Year'], ascending=False, inplace=True)
     newdf.reset_index(inplace=True)
+
+    st.slider("How many titles would you like to explore?", min_value=10, max_value=len(newdf), value=10, step=10, key="number_to_print")
+    st.markdown(f"Showing the most recent {st.session_state.number_to_print} articles:")
+
     for i in range(len(newdf)):
         st.markdown(f"{newdf.loc[i,'Year']}. {newdf.loc[i,'Title']} https://doi.org/{newdf.loc[i,'DOI']}")
-        if i == 50:
+        if i == st.session_state.number_to_print:
             break
 
 st.markdown("""
