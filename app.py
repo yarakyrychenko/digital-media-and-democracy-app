@@ -5,7 +5,7 @@ from wordcloud import WordCloud, STOPWORDS
 data = pd.read_excel("data_effects.xlsx").fillna("Unknown")
 countries = list(data.country.unique())
 countries.insert(0, "All")
-years = list(data.Year.unique())
+years = (data.Year.unique())
 years.insert(0, "All")
 data.effect = pd.Categorical(data.effect).rename_categories({-1: 'Detrimental', 0: 'No association', 1: "Beneficial"})
 effects = list(data.effect.unique())
@@ -41,7 +41,7 @@ def get_filtered_txt(data, filtervars, vars = ["Year", "effect", "country"]):
         if filtervars[i] == "All":
             pass
         else:
-            newdata = newdata[newdata.vars[i]==filtervars[i]]
+            newdata = newdata[newdata[vars[i]]==filtervars[i]]
     return newdata.text
 
 
