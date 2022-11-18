@@ -32,7 +32,7 @@ data["text"] = [str(data.loc[i, "Title"]) + " " + str(data.loc[i, "Abstract Note
 st.markdown("<h1 style='text-align: center;'> Digital Media and Democracy </h1>", unsafe_allow_html=True)
 st.markdown("<h3 style='text-align: center;'>  wordclouds of titles and abstracts of scientific papers </h3>", unsafe_allow_html=True)
 
-stopwords = STOPWORDS.union(set(["find", "study", "investigate", "result", "sample", 
+st.session_state.new_stopwords = STOPWORDS.union(set(["find", "study", "investigate", "result", "sample", 
                                 "finding", "paper", "article", "results", "findings",
                                 "test", "one", "two", "three", "examine"]))
 
@@ -45,7 +45,7 @@ def preprocess(out):
 
 def make_wordcloud(out, color):
     text = preprocess(out)
-    wordcloud = WordCloud(width=1800, height=1200,stopwords=stopwords,
+    wordcloud = WordCloud(width=1800, height=1200,stopwords=st.session_state.new_stopwords,
                         max_font_size=250, max_words=150, background_color="white",
                         colormap=color, collocations=True).generate(text)  
 
