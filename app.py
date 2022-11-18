@@ -88,7 +88,7 @@ else:
     st.pyplot(figure)
 
     st.markdown("Showing the most recent fifty articles:")
-    newdf.sort_values(by=['Year'], ascending=False, inplase=True).reset_index(inplace=True)
+    newdf.sort_values(by=['Year'], ascending=False, inplace=True).reset_index(inplace=True)
     for i in range(len(newdf)):
         st.markdown(f"{newdf.loc[i,'Year']}. {newdf.loc[i,'Title']} https://doi.org/{newdf.loc[i,'DOI']}")
         if i == 50:
