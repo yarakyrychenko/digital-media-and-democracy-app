@@ -48,7 +48,7 @@ def make_wordcloud(text, color, stopwords = st.session_state.stopwords):
                         colormap=color, collocations=True).generate(text)  
 
     fig = plt.figure(figsize=(18,12))
-    #plt.imshow(wordcloud, interpolation="bilinear")
+    plt.plot(wordcloud) #, imshow interpolation="bilinear")
     plt.axis("off")
     return fig
 
