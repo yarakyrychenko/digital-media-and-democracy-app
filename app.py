@@ -11,7 +11,8 @@ data.effect = pd.Categorical(data.effect).rename_categories({-1: 'Detrimental', 
 effects = list(data.effect.unique())
 effects.insert(0, "All")
 
-data["text"] = [str(data.loc[i, "Title"]) + " " + str(data.loc[i, "Abstract.Note"]) for i in range(len(data))]
+# Abstract.Note for data_review
+data["text"] = [str(data.loc[i, "Title"]) + " " + str(data.loc[i, "Abstract Note...8"]) for i in range(len(data))]
 
 st.title(" Digital Media and Democracy") 
 st.subheader("Create a wordcloud out of titles and abstracts of papers about digital media and democracy!")
