@@ -11,20 +11,24 @@ def load_lottieurl(url):
     return r.json()
 
 data = pd.read_excel("data_effects.xlsx").fillna("Unknown")
+
 data.country = data.country.apply(lambda x: "USA" if x == "United States" else x)
 countries = list(data.country.unique())
 countries.sort(reverse=True)
 countries.insert(0, "All")
+
 data.Year = data.Year.apply(lambda x: str(x)[:4])
 years = list(data.Year.unique())
 years.sort(reverse=True)
 years.insert(0, "All")
+
 data.effect = pd.Categorical(data.effect).rename_categories({-1: 'Detrimental', 0: 'No association', 1: "Beneficial"})
 effects = list(data.effect.unique())
 effects.insert(0, "All")
 
 # Abstract.Note for data_review
 data["text"] = [str(data.loc[i, "Title"]) + " " + str(data.loc[i, "Abstract Note...8"]) for i in range(len(data))]
+data.text = data.text.apply(lambda text: text.lower())
 
 #lottie_tweet = load_lottieurl('https://assets6.lottiefiles.com/packages/lf20_tnrzlN.json')
 #st_lottie(lottie_tweet, speed=1, height=200, key="initial")
@@ -36,16 +40,10 @@ st.session_state.new_stopwords = STOPWORDS.union(set(["find", "study", "investig
                                 "finding", "paper", "article", "results", "findings",
                                 "test", "one", "two", "three", "examine"]))
 
-def preprocess(out):
-    text = " ".join(out)
-    text = text.lower()
-    #text = re.sub(pattern=r"http\S+",repl="",string=text.lower())
-    #text = re.sub(pattern=r"@\S+",repl="",string=text)
-    return text
 
-def make_wordcloud(out, color):
-    text = preprocess(out)
-    wordcloud = WordCloud(width=1800, height=1200,stopwords=st.session_state.new_stopwords,
+def make_wordcloud(text, color):
+    text = " ".join(text)
+    wordcloud = WordCloud(width=1800, height=1200,#stopwords=stopwords,
                         max_font_size=250, max_words=150, background_color="white",
                         colormap=color, collocations=True).generate(text)  
 
