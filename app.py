@@ -103,7 +103,7 @@ overtime  = overtime[overtime["Year"] != "Unkn"]
 overtime  = overtime[overtime["country"] != "Unknown"]
 overtime  = overtime[overtime["country"] != "World"]
 overtime["selected"] = overtime["country"].apply( lambda country: 1 if country in set(st.session_state.COUNTRY) else 0 )
-overtime["not selected"] = overtime["selected"].apply( lambda country: 1 if country == 0 else 0)
+overtime["not selected"] = overtime["country"].apply( lambda country: 1 if country not in set(st.session_state.COUNTRY) else 0 )
 st.write(overtime[["Year","selected","not selected"]].groupby('Year').agg('sum'))
 st.line_chart(overtime[["Year","selected","not selected"]].groupby('Year').agg('sum'))
 
