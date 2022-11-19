@@ -102,7 +102,7 @@ overtime = get_filtered_data(data, st.session_state.filters[1:2],["outcome_clean
 overtime  = overtime[overtime["Year"] != "Unkn"]
 overtime  = overtime[overtime["country"] != "Unknown"]
 overtime  = overtime[overtime["country"] != "World"]
-overtime_selected = get_filtered_data(overtime, st.session_state.COUNTRY)
+overtime_selected = get_filtered_data(overtime, [st.session_state.COUNTRY])
 overtime_selected["selection"] = [1]*len(overtime_selected)
 overtime_not_selected = overtime[overtime.index not in overtime_selected.index]
 overtime_not_selected["selection"] = [1]*len(overtime_not_selected)
