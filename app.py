@@ -26,7 +26,7 @@ outcomes = list(data.outcome_clean.unique())
 outcomes.sort(reverse=True)
 outcomes.insert(0, "All")
 
-data.effect = pd.Categorical(data.effect).rename_categories({-1: 'Negative', 0: 'No association', 1: "Positive"})
+data.effect = pd.Categorical(data.effect).rename_categories({-1: 'decrease', 0: 'no association', 1: "increase"})
 effects = list(data.effect.unique())
 effects.insert(0, "All")
 
