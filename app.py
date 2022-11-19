@@ -104,7 +104,7 @@ overtime  = overtime[overtime["country"] != "Unknown"]
 overtime  = overtime[overtime["country"] != "World"]
 overtime_selected = get_filtered_data(overtime, [st.session_state.COUNTRY], ["country"])
 overtime_selected["selection"] = [1]*len(overtime_selected)
-overtime_not_selected = get_filtered_data(overtime, [countries - st.session_state.COUNTRY], ["country"])
+overtime_not_selected = get_filtered_data(overtime, [list(set(countries) - set(st.session_state.COUNTRY))], ["country"])
 overtime_not_selected["selection"] = [1]*len(overtime_not_selected)
 to_line = pd.DataFrame(
     [overtime_selected[["Year","selection"]].groupby('Year').agg('sum')["selection"], overtime_not_selected[["Year","selection"]].groupby('Year').agg('sum')["selection"]],
