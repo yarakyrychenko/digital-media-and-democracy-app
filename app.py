@@ -69,10 +69,10 @@ def get_filtered_data(data, filtervars, vars = ["Year", "outcome_clean", "effect
     return newdata
 
 
-st.multiselect("Filter by year of publication", years, default=["All"], key="YEAR")
 st.multiselect("Filter by outcome", outcomes, default=["All"], key="OUTCOME")
 st.multiselect("Filter by effect of digital media on outcome", effects, default=["All"], key="EFFECT")
 st.multiselect("Filter by country of study", countries, default=["All"], key="COUNTRY")
+st.multiselect("Filter by year of publication", years, default=["All"], key="YEAR")
 
 filters = [st.session_state.YEAR , st.session_state.OUTCOME, st.session_state.EFFECT, st.session_state.COUNTRY ]
 newdf = get_filtered_data(data, filters)
