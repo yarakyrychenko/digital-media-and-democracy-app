@@ -74,38 +74,50 @@ st.multiselect("Filter by effect of digital media on outcome", effects, default=
 st.multiselect("Filter by country of study", countries, default=["All"], key="COUNTRY")
 st.multiselect("Filter by year of publication", years, default=["All"], key="YEAR")
 
-filters = [st.session_state.YEAR , st.session_state.OUTCOME, st.session_state.EFFECT, st.session_state.COUNTRY ]
-newdf = get_filtered_data(data, filters)
-df = newdf.drop_duplicates(subset=["Title"])
-texts = df.text
+if "last_filters" not in st.session_state:
+    st.session_state.last_filters = []
 
-if len(texts) == 0:
-    st.markdown("There are no articles matching your selection criteria.")
-else:
-    st.markdown(f"There are {len(texts)} articles matching your selection criteria.")
-    if st.session_state.EFFECT == ["Detrimental"]:
-        color = 'autumn' 
-    elif st.session_state.EFFECT == ["Beneficial"]:
-        color = 'summer' 
-    else: 
-        color = 'cool'
+st.session_state.filters = [st.session_state.YEAR , st.session_state.OUTCOME, st.session_state.EFFECT, st.session_state.COUNTRY ]
+st.session_state.changed = st.session_state.filters != st.session_state.last_filters
 
-    st.pyplot(make_wordcloud(texts, color))
+newdf = get_filtered_data(data, st.session_state.filters)
 
-    newdf.drop_duplicates(subset=["Title"],inplace=True)
-    newdf = newdf[newdf["Year"] != "Unkn"]
-    newdf["DOITrue"] = newdf.DOI.apply(lambda doi : len(doi) < 100)
-    newdf = newdf[newdf["DOITrue"]]
-    newdf.sort_values(by=['Year'], ascending=False, inplace=True)
-    newdf.reset_index(inplace=True)
+if st.session_state.changed:
+    df = newdf.drop_duplicates(subset=["Title"])
+    if len(df.text) == 0:
+        st.markdown("There are no articles matching your selection criteria.")
+    else:
+        st.markdown(f"There are {len(df.text)} articles matching your selection criteria.")
+        st.pyplot(make_wordcloud(df.text, "cool"))  
+    st.session_state.last_filters = st.session_state.filters
 
-    st.slider("How many titles would you like to explore?", min_value=0, max_value=len(newdf), value= 10 if len(newdf) > 9 else len(newdf) , step=1, key="number_to_print")
-    st.markdown(f"Showing {st.session_state.number_to_print} most recent articles:")
+    df = newdf.drop_duplicates(subset=["Title"])
+    df = df[df["Year"] != "Unkn"]
+    df["DOITrue"] = df.DOI.apply(lambda doi : len(doi) < 100)
+    df = df[df["DOITrue"]]
+    df.sort_values(by=['Year'], ascending=False, inplace=True)
+    df.reset_index(inplace=True)
 
-    for i in range(len(newdf)):
-        if i == st.session_state.number_to_print:
-            break
-        st.markdown(f"{newdf.loc[i,'Year']}. {newdf.loc[i,'Title']} https://doi.org/{newdf.loc[i,'DOI']}")
+overtime = get_filtered_data(data, st.session_state.filters[1:2],["outcome_clean", "effect"])
+overtime  = overtime[overtime["Year"] != "Unkn"]
+overtime  = overtime[overtime["country"] != "Unknown"]
+overtime  = overtime[overtime["country"] != "World"]
+overtime_selected = get_filtered_data(overtime, st.session_state.COUNTRY)
+overtime_selected["selection"] = [1]*len(overtime_selected)
+overtime_not_selected = overtime[overtime.index not in overtime_selected.index]
+overtime_not_selected["selection"] = [1]*len(overtime_not_selected)
+to_line = pd.DataFrame(
+    [overtime_selected[["Year","selection"]].groupby('Year').agg('sum')["selection"], overtime_not_selected[["Year","selection"]].groupby('Year').agg('sum')["selection"]],
+    columns=['selected countries', 'not selected'])
+st.line_chart(to_line)
+
+st.slider("How many titles would you like to explore?", min_value=0, max_value=len(df), value= 10 if len(df) > 9 else len(df) , step=1, key="number_to_print")
+st.markdown(f"Showing {st.session_state.number_to_print} most recent articles:")
+
+for i in range(len(df)):
+    if i == st.session_state.number_to_print:
+        break
+    st.markdown(f"{df.loc[i,'Year']}. {df.loc[i,'Title']} https://doi.org/{df.loc[i,'DOI']}")
 
 st.markdown("""
 
