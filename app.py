@@ -106,8 +106,9 @@ overtime_selected = get_filtered_data(overtime, [st.session_state.COUNTRY], ["co
 overtime_selected["selection"] = [1]*len(overtime_selected)
 overtime_not_selected = get_filtered_data(overtime, [list(set(countries) - set(st.session_state.COUNTRY))], ["country"])
 overtime_not_selected["selection"] = [1]*len(overtime_not_selected)
+st.write(overtime_selected[["Year","selection"]].groupby('Year').agg('sum')["sum"])
 to_line = pd.DataFrame(
-    [overtime_selected[["Year","selection"]].groupby('Year').agg('sum')["selection"], overtime_not_selected[["Year","selection"]].groupby('Year').agg('sum')["selection"]],
+    [overtime_selected[["Year","selection"]].groupby('Year').agg('sum')["sum"], overtime_not_selected[["Year","selection"]].groupby('Year').agg('sum')["sum"]],
     columns=['selected countries', 'not selected'])
 st.line_chart(to_line)
 
