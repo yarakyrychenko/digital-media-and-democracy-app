@@ -102,15 +102,10 @@ overtime = get_filtered_data(data, st.session_state.filters[1:3],["outcome_clean
 overtime  = overtime[overtime["Year"] != "Unkn"]
 overtime  = overtime[overtime["country"] != "Unknown"]
 overtime  = overtime[overtime["country"] != "World"]
-overtime_selected = get_filtered_data(overtime, [st.session_state.COUNTRY], ["country"])
-overtime_selected["selection"] = [1]*len(overtime_selected)
-overtime_not_selected = get_filtered_data(overtime, [list(set(countries) - set(st.session_state.COUNTRY))], ["country"])
-overtime_not_selected["selection"] = [1]*len(overtime_not_selected)
-st.write(overtime_selected[["Year","selection"]].groupby('Year').agg('sum'))
-to_line = pd.DataFrame(
-    [overtime_selected[["Year","selection"]].groupby('Year').agg('sum')["sum"], overtime_not_selected[["Year","selection"]].groupby('Year').agg('sum')["sum"]],
-    columns=['selected countries', 'not selected'])
-st.line_chart(to_line)
+overtime["selected"] = overtime["country"].apply( lambda country: 1 if country in set(st.session_state.COUNTRY) else 0 )
+overtime["not selected"] = overtime["selected"].apply( lambda country: 1 if country == 0 else 0)
+st.write(overtime[["Year","selected","not selected"]].groupby('Year').agg('sum'))
+st.line_chart(overtime[["Year","selected","not selected"]].groupby('Year').agg('sum'))
 
 st.slider("How many titles would you like to explore?", min_value=0, max_value=len(df), value= 10 if len(df) > 9 else len(df) , step=1, key="number_to_print")
 st.markdown(f"Showing {st.session_state.number_to_print} most recent articles:")
