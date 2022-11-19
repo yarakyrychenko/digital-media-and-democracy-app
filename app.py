@@ -90,8 +90,7 @@ else:
     else: 
         color = 'cool'
 
-    figure = make_wordcloud(texts, color)
-    st.pyplot(figure)
+    st.pyplot(make_wordcloud(texts, color))
 
     newdf.drop_duplicates(subset=["Title"],inplace=True)
     newdf = newdf[newdf["Year"] != "Unkn"]
