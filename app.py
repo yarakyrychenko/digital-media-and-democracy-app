@@ -100,13 +100,13 @@ else:
     newdf.sort_values(by=['Year'], ascending=False, inplace=True)
     newdf.reset_index(inplace=True)
 
-    st.slider("How many titles would you like to explore?", min_value=1, max_value=len(newdf), value= 10 if len(newdf) > 9 else len(newdf) , step=1, key="number_to_print")
+    st.slider("How many titles would you like to explore?", min_value=0, max_value=len(newdf), value= 10 if len(newdf) > 9 else len(newdf) , step=1, key="number_to_print")
     st.markdown(f"Showing {st.session_state.number_to_print} most recent articles:")
 
     for i in range(len(newdf)):
-        st.markdown(f"{newdf.loc[i,'Year']}. {newdf.loc[i,'Title']} https://doi.org/{newdf.loc[i,'DOI']}")
         if i == st.session_state.number_to_print:
             break
+        st.markdown(f"{newdf.loc[i,'Year']}. {newdf.loc[i,'Title']} https://doi.org/{newdf.loc[i,'DOI']}")
 
 st.markdown("""
 
