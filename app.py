@@ -98,7 +98,7 @@ if st.session_state.changed:
     df.sort_values(by=['Year'], ascending=False, inplace=True)
     df.reset_index(inplace=True)
 
-overtime = get_filtered_data(data, st.session_state.filters[1:2],["outcome_clean", "effect"])
+overtime = get_filtered_data(data, st.session_state.filters[1:3],["outcome_clean", "effect"])
 overtime  = overtime[overtime["Year"] != "Unkn"]
 overtime  = overtime[overtime["country"] != "Unknown"]
 overtime  = overtime[overtime["country"] != "World"]
