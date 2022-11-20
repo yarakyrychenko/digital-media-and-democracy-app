@@ -104,9 +104,11 @@ overtime  = overtime[overtime["country"] != "Unknown"]
 overtime  = overtime[overtime["country"] != "World"]
 overtime["not selected"] = overtime["country"].apply( lambda country: 1 if country not in set(st.session_state.COUNTRY) else 0 )
 overtime["selected"] = overtime["country"].apply( lambda country: 1 if country in set(st.session_state.COUNTRY) else 0 )
-st.markdown(f"""Number of papers published with outcomes '{st.session_state.OUTCOME.join(',')}' and effects '{st.session_state.EFFECT.join(',')}\n
-                in selected countries '{st.session_state.COUNTRY.join(',')}' as compared to non selected.""")
-st.line_chart(overtime[["Year","selected","not selected"]].groupby('Year').agg('sum'))
+
+if st.session_state.COUNTRY[0] != "All":
+    st.markdown(f"""Number of papers published with outcomes '{', '.join(st.session_state.OUTCOME)}' and effects '{', '.join(st.session_state.EFFECT)}\n
+                in selected countries '{', '.join(st.session_state.COUNTRY)}' as compared to non selected.""")
+    st.line_chart(overtime[["Year","selected","not selected"]].groupby('Year').agg('sum'))
 
 st.slider("How many titles would you like to explore?", min_value=0, max_value=len(df), value= 10 if len(df) > 9 else len(df) , step=1, key="number_to_print")
 st.markdown(f"Showing {st.session_state.number_to_print} most recent articles:")
