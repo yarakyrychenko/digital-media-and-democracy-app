@@ -97,17 +97,6 @@ if st.session_state.changed:
     df.sort_values(by=['Year'], ascending=False, inplace=True)
     st.session_state.df = df.reset_index(inplace=False)
 
-overtime = get_filtered_data(data, st.session_state.filters[1:3],["outcome_clean", "effect"])
-overtime  = overtime[overtime["Year"] != "Unkn"]
-overtime  = overtime[overtime["country"] != "Unknown"]
-overtime  = overtime[overtime["country"] != "World"]
-overtime["not selected"] = overtime["country"].apply( lambda country: 1 if country not in set(st.session_state.COUNTRY) else 0 )
-overtime["selected"] = overtime["country"].apply( lambda country: 1 if country in set(st.session_state.COUNTRY) else 0 )
-
-if st.session_state.COUNTRY[0] != "All":
-    st.markdown(f"""Number of papers published with outcomes '{', '.join(st.session_state.OUTCOME)}' and effects '{', '.join(st.session_state.EFFECT)}' in selected countries '{', '.join(st.session_state.COUNTRY)}' as compared to non selected.""")
-    st.line_chart(overtime[["Year","selected","not selected"]].groupby('Year').agg('sum'))
-
 st.slider("How many titles would you like to explore?", min_value=0, max_value=len(st.session_state.df), value= 10 if len(st.session_state.df) > 9 else len(st.session_state.df) , step=1, key="number_to_print")
 st.markdown(f"Showing {st.session_state.number_to_print} most recent articles:")
 
